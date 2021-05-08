@@ -1,0 +1,92 @@
+package my.grandwork.Parsers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import my.grandwork.Data.StudyDirectionsInformation;
+import my.grandwork.Data.StudyGrades;
+import my.grandwork.Data.StudyTypes;
+
+public class MtuciParserCore {
+
+    public static ArrayList<StudyDirectionsInformation> fillDirectionsInfo(WebDriver driver, StudyGrades grade) {
+        ArrayList<StudyDirectionsInformation> list = new ArrayList<StudyDirectionsInformation>();
+
+        List<WebElement> headers = driver.findElements(By.cssSelector("#divbody h3"));
+        List<WebElement> tables = driver.findElements(By.cssSelector("#divbody table"));
+
+        // 3 таблицы максимум: очно-заочно-очнозаочно, в каждой лежат направления
+        for (int table = 0; table < tables.size(); table++)
+        {
+            StudyTypes tableTypes = StudyTypes.FULL_TIME;
+            String studyTypeText = null;
+            if (headers.size() == 0) studyTypeText = "очная";
+            else if (tables.size() > headers.size()) {     
+                for (int header = headers.size() - 1; header > -1; header--)
+                {
+                    Point headerLoc = headers.get(header).getLocation();
+                    Point tableLoc = tables.get(table).getLocation();
+                    if (headerLoc.y < tableLoc.y) {
+                        studyTypeText = headers.get(header).getText();
+                        break;
+                    }
+                }        
+            }
+            else {
+                studyTypeText = headers.get(table).getText();
+            }
+            if (studyTypeText.toLowerCase().contains("очная")) tableTypes = StudyTypes.FULL_TIME;
+            if (studyTypeText.toLowerCase().contains("заочная")) tableTypes = StudyTypes.PART_TIME;
+            if (studyTypeText.toLowerCase().contains("очно-заочная")) tableTypes = StudyTypes.СOMBINED_TIME;
+            
+            // В каждой таблице есть строки
+            List<WebElement> rows = tables.get(table).findElements(By.tagName("tr"));
+           
+            // Строку-заголовок
+            if (rows.get(0).findElements(By.tagName("th")).size() != 0 ) rows.remove(0);
+            for (int row = 0; row < rows.size(); row++)
+            {
+                List<WebElement> cells = rows.get(row).findElements(By.tagName("td"));
+                if (cells.size() == 0) continue;
+                
+                StudyDirectionsInformation info = new StudyDirectionsInformation();
+                info.typesOfStudy = tableTypes;
+                info.studyGrades = grade;
+
+                // Интересуют только первые 3 ячейки
+                for (int cell = 0; cell < 3; cell++)
+                {
+                    switch (cell + 1)
+                    {
+                        case 1: info.nameOfDirectory = cells.get(cell).getText();
+                            break;
+                        case 2: info.directoryCode = cells.get(cell).getText();
+                            break;
+                        case 3: try { info.admissionPlanForFree = Integer.parseInt(cells.get(cell).getText()); }
+                            catch (Exception e) { 
+                                System.out.println(String.format("site=%s, table=%d, row=%d, cell=%d, valueCell=%s", driver.getCurrentUrl(), table, row, cell, cells.get(cell).getText()));
+                            }
+                            break;
+                    }
+                }
+                list.add(info);
+            }  
+        }
+        return list;
+    }
+
+    public static void fillPlanAndCostInfo(WebDriver driver, ArrayList<StudyDirectionsInformation> list) {
+
+    }
+
+    public static void getLastYearScores() {
+
+    }
+}
+
+
