@@ -1,6 +1,9 @@
-package my.grandwork.Data;
+package my.grandwork.Data.SubWrappers;
 
-public class StudyDirectionsInformation {
+import my.grandwork.Data.enums.StudyGrade;
+import my.grandwork.Data.enums.StudyType;
+
+public class StudyDirectionInfo {
 
     // Код направления
     public String directoryCode;
@@ -15,10 +18,10 @@ public class StudyDirectionsInformation {
     public Integer nowDirectoryScore;
 
     // Вид обучения (очный и т.д.)
-    public StudyTypes typesOfStudy;
+    public StudyType typesOfStudy;
 
     // Уровень образования (бакалавриат и т.д.)
-    public StudyGrades studyGrades;
+    public StudyGrade studyGrades;
 
     // Стоимость обучения
     public Integer costOfEducation;
@@ -28,4 +31,11 @@ public class StudyDirectionsInformation {
 
     // План приёма общий
     public Integer admissionPlanAll;
+
+    // План приёма на целевое
+    public Integer admissionPlanForTarget;
+
+    // План приёма на платное
+    public Integer admussionPlanForPrice;
+
 }

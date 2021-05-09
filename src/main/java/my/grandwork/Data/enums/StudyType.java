@@ -1,6 +1,6 @@
-package my.grandwork.Data;
+package my.grandwork.Data.enums;
 
-public enum StudyTypes {
+public enum StudyType {
 
     // Очное обучение
     FULL_TIME, 

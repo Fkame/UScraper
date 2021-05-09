@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 
-import my.grandwork.Data.StudyDirectionsInformation;
-import my.grandwork.Data.StudyGrades;
+import my.grandwork.Data.SubWrappers.StudyDirectionInfo;
+import my.grandwork.Data.enums.StudyGrade;
 
 
 public class MtuciParser {
@@ -21,22 +21,22 @@ public class MtuciParser {
         //driver.quit();
     }
 
-    public ArrayList<StudyDirectionsInformation> getDirectionsInfo() {
-        ArrayList<StudyDirectionsInformation> directories = new ArrayList<StudyDirectionsInformation>();
+    public ArrayList<StudyDirectionInfo> getDirectionsInfo() {
+        ArrayList<StudyDirectionInfo> directories = new ArrayList<StudyDirectionInfo>();
 
         // Парсим названия направлений для магистратуры, бакалавра, аспирантуры
         driver.get("https://abitur.mtuci.ru/#!livetable");
         try { Thread.sleep(1000);} catch (Exception e) {}
-        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrades.BACHELOR));
+        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrade.BACHELOR));
         
         driver.get("https://abitur.mtuci.ru/#!magistratura_livetable");
         try { Thread.sleep(1000);} catch (Exception e) {}
-        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrades.MASTER)); 
+        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrade.MASTER)); 
 
         driver.get("https://abitur.mtuci.ru/#!aspirantura_livetable");
         try { Thread.sleep(1000);} catch (Exception e) {}
         
-        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrades.POST_GRADUATE));
+        directories.addAll(MtuciParserCore.fillDirectionsInfo(driver, StudyGrade.POST_GRADUATE));
 
       
         this.printAllData1(directories);
@@ -60,8 +60,8 @@ public class MtuciParser {
         return null;
     }
 
-    public void printAllData1(ArrayList<StudyDirectionsInformation> list) {
-        for (StudyDirectionsInformation info : list) {
+    public void printAllData1(ArrayList<StudyDirectionInfo> list) {
+        for (StudyDirectionInfo info : list) {
             String output = info.directoryCode + " | " + 
                             info.nameOfDirectory + " | " + 
                             info.admissionPlanForFree + " | " +

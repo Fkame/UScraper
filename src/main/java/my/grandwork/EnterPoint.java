@@ -4,8 +4,8 @@ import org.openqa.selenium.WebDriver;
 
 import my.grandwork.Parsers.BaumanParser;
 import my.grandwork.Parsers.MtuciParser;
-import my.grandwork.configuration.Browsers;
-import my.grandwork.configuration.ConfigurationFabric;
+import my.grandwork.Util.ConfigurationFabric;
+import my.grandwork.Util.enums.Browser;
 
 /*
  * EnterPoint
@@ -18,7 +18,7 @@ public class EnterPoint
         
         WebDriver driver = null;
         try {
-            driver = ConfigurationFabric.configurateDriver(Browsers.CHROME);
+            driver = ConfigurationFabric.getConfiguratedDriver(Browser.CHROME);
 
             //System.out.println("Mtuci parser");
             //MtuciParser p = new MtuciParser(driver);

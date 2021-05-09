@@ -8,14 +8,14 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import my.grandwork.Data.StudyDirectionsInformation;
-import my.grandwork.Data.StudyGrades;
-import my.grandwork.Data.StudyTypes;
+import my.grandwork.Data.SubWrappers.StudyDirectionInfo;
+import my.grandwork.Data.enums.StudyGrade;
+import my.grandwork.Data.enums.StudyType;
 
 public class MtuciParserCore {
 
-    public static ArrayList<StudyDirectionsInformation> fillDirectionsInfo(WebDriver driver, StudyGrades grade) {
-        ArrayList<StudyDirectionsInformation> list = new ArrayList<StudyDirectionsInformation>();
+    public static ArrayList<StudyDirectionInfo> fillDirectionsInfo(WebDriver driver, StudyGrade grade) {
+        ArrayList<StudyDirectionInfo> list = new ArrayList<StudyDirectionInfo>();
 
         List<WebElement> headers = driver.findElements(By.cssSelector("#divbody h3"));
         List<WebElement> tables = driver.findElements(By.cssSelector("#divbody table"));
@@ -23,7 +23,7 @@ public class MtuciParserCore {
         // 3 таблицы максимум: очно-заочно-очнозаочно, в каждой лежат направления
         for (int table = 0; table < tables.size(); table++)
         {
-            StudyTypes tableTypes = StudyTypes.FULL_TIME;
+            StudyType tableTypes = StudyType.FULL_TIME;
             String studyTypeText = null;
             if (headers.size() == 0) studyTypeText = "очная";
             else if (tables.size() > headers.size()) {     
@@ -40,9 +40,9 @@ public class MtuciParserCore {
             else {
                 studyTypeText = headers.get(table).getText();
             }
-            if (studyTypeText.toLowerCase().contains("очная")) tableTypes = StudyTypes.FULL_TIME;
-            if (studyTypeText.toLowerCase().contains("заочная")) tableTypes = StudyTypes.PART_TIME;
-            if (studyTypeText.toLowerCase().contains("очно-заочная")) tableTypes = StudyTypes.СOMBINED_TIME;
+            if (studyTypeText.toLowerCase().contains("очная")) tableTypes = StudyType.FULL_TIME;
+            if (studyTypeText.toLowerCase().contains("заочная")) tableTypes = StudyType.PART_TIME;
+            if (studyTypeText.toLowerCase().contains("очно-заочная")) tableTypes = StudyType.СOMBINED_TIME;
             
             // В каждой таблице есть строки
             List<WebElement> rows = tables.get(table).findElements(By.tagName("tr"));
@@ -54,7 +54,7 @@ public class MtuciParserCore {
                 List<WebElement> cells = rows.get(row).findElements(By.tagName("td"));
                 if (cells.size() == 0) continue;
                 
-                StudyDirectionsInformation info = new StudyDirectionsInformation();
+                StudyDirectionInfo info = new StudyDirectionInfo();
                 info.typesOfStudy = tableTypes;
                 info.studyGrades = grade;
 
@@ -80,7 +80,7 @@ public class MtuciParserCore {
         return list;
     }
 
-    public static void fillPlanAndCostInfo(WebDriver driver, ArrayList<StudyDirectionsInformation> list) {
+    public static void fillPlanAndCostInfo(WebDriver driver, ArrayList<StudyDirectionInfo> list) {
 
     }
 

@@ -1,6 +1,6 @@
-package my.grandwork.Data;
+package my.grandwork.Data.enums;
 
-public enum StudyGrades {
+public enum StudyGrade {
 
     // Бакалавр
     BACHELOR,
