@@ -6,12 +6,12 @@ import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
 
-public class StankinkParser implements IUniversityParser {
-
+public class MISiSParser implements IUniversityParser {
+    
     private WebDriver driver;
     private ParserWorkResult result;
 
-    public StankinkParser(WebDriver driver) {
+    public MISiSParser(WebDriver driver) {
         this.driver = driver;
         result = new ParserWorkResult();
     }

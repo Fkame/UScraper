@@ -1,25 +1,66 @@
 package my.grandwork.UniversitiesParser;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.UnaryOperator;
+
+import org.openqa.selenium.WebDriver;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
+import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.*;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
+import my.grandwork.UniversitiesParser.Util.ConfigurationFabric;
+import my.grandwork.UniversitiesParser.Util.enums.Browser;
 
 public class ParserController {
     
     public boolean useMultiThreads = false;
+    private int maxNumOfThreads = 32;
+    public Browser browser = Browser.CHROME;
+    public boolean headlessMode = false;
+
     public ParserController() { }
 
-    /**
-     * Собирает все данные обо всех поддерживаемых вузах.
-     * @return
-     */
-    public ArrayList<ParserWorkResult> parseAllUniversitiesInfo() {
-        ArrayList<ParserWorkResult> list = new ArrayList<ParserWorkResult>();
+    public ParserController(Browser browser, boolean headlessMode, boolean useMultiThreads) {
+        this.browser = browser;
+        this.headlessMode = headlessMode;
+        this.useMultiThreads = useMultiThreads;
+    }
 
+    public boolean setMaxNumOfThreads(int amount) {
+        if (amount > 1024 | amount < 1) return false;
+        this.maxNumOfThreads = amount;
+        return true;
+    }
+
+    private IUniversityParser createTargetUniversityParser(WebDriver driver, University university) {
+        IUniversityParser parser = null;
+        switch (university)
+        {
+            case MTUCI: 
+                parser = new MtuciParser(driver);
+                break;
+            case BMSTU:
+                parser = new BaumanParser(driver);
+                break;
+            case STANKINK:
+                parser = new StankinkParser(driver);
+                break;
+            case MISiS:
+                parser = new MISiSParser(driver);
+            ///TODO: после реализации парсера сюда нужно добавить его вызов
+            default: 
+                throw new InvalidParameterException("This univesity does not supported yet");
+        } 
+        return parser;
+    }
+   
+    public List<ParserWorkResult> parseAllUniversitiesInfo() {
+        List<ParserWorkResult> list = new ArrayList<ParserWorkResult>();
         List<University> univers = Arrays.asList(University.values());
         for (University university : univers) {
             list.add(this.parseTargetUniversityInfo(university));
@@ -27,53 +68,51 @@ public class ParserController {
 
         return list;
     }
-
-    /**
-     * Собирает все данные о конкретном вузе.
-     * @param university Локальное именование вуза в системе.
-     * @return 
-     */
+   
     public ParserWorkResult parseTargetUniversityInfo(University university) {
-        ParserWorkResult wrapper = new ParserWorkResult();
-
-        return wrapper;
+        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
+        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+        ParserWorkResult result = parser.parseAllUniversityInfo();
+        return result;
     }
 
-     /**
-     * Собирает данные из конкурсной таблице о текущих баллах из всех поддерживаемых университетов.
-     * @return 
-     */
+    
     public List<ParserWorkResult> parseCurrentScoresForAllGradesInAllUniversities() {
-        return null;
+        List<ParserWorkResult> list = new ArrayList<ParserWorkResult>();
+        List<University> univers = Arrays.asList(University.values());
+        for (University university : univers) {
+            list.add(this.parseCurrentScoresForAllGradesInTargetUniversity(university));
+        }
+
+        return list;
     }
 
-    /**
-     * Собирает данные из конкурсной таблицы о текущих баллах лишь об одном уровне образования из всех поддерживаемых университетов.
-     * @param grade Уровень образования (магистр, бакалавр, аспирант).
-     * @return
-     */
-    public List<ParserWorkResult> parseCurrentScoresForTargetGradeInAllUniversities(StudyGrade grade) {
-        return null;
-    }
-
-    /**
-     * Собирает данные из конкурсной таблицы о текущих баллах в указанном университете
-     * @param university Локальное именование вуза в системе.
-     * @return 
-     */
+   
     public ParserWorkResult parseCurrentScoresForAllGradesInTargetUniversity(University university) {
-        return null;
+        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
+        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+        ParserWorkResult result = parser.parseCurrentScoresForAllGradesInfo();
+        return result;
     }
 
-    /**
-     * Собирает данные из конкурсной таблицы о текущих баллах указанног уровня в указанном университете
-     * @param university  Локальное именование вуза в системе.
-     * @param grade Уровень образования (магистр, бакалавр, аспирант).
-     * @return
-     */
+
+  
+    public List<ParserWorkResult> parseCurrentScoresForTargetGradeInAllUniversities(StudyGrade grade) {
+        List<ParserWorkResult> list = new ArrayList<ParserWorkResult>();
+        List<University> univers = Arrays.asList(University.values());
+        for (University university : univers) {
+            list.add(this.parseCurrentScoresForTargetGradeInTargetUniversity(university, grade));
+        }
+
+        return list;
+    }
+
+  
     public ParserWorkResult parseCurrentScoresForTargetGradeInTargetUniversity(University university, StudyGrade grade) {
-        return null;
+        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
+        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+        ParserWorkResult result = parser.parseCurrentScoresForTargetGradeInfo(grade);
+        return result;
     }
-
 
 }

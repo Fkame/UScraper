@@ -7,7 +7,7 @@ import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 
 /** Контракт для всех парсеров */
-public interface IUniversaryParser {
+public interface IUniversityParser {
     
     /**
      * Сбор всех данных о вузе.

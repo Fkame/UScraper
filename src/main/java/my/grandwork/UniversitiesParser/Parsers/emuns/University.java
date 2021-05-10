@@ -13,5 +13,8 @@ public enum University {
     BMSTU,
 
     // Московский политех
-    SPBSTU;
+    SPBSTU,
+
+    // МИСИС
+    MISiS;
 }

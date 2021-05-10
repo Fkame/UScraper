@@ -1,53 +1,38 @@
 package my.grandwork.UniversitiesParser.Parsers.ParsersRealisation;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.WebDriver;
 
-public class BaumanParser {
+import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
+import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
+import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
+
+public class BaumanParser implements IUniversityParser {
     
-    WebDriver driver;
+    private WebDriver driver;
+    private ParserWorkResult result;
+
     public BaumanParser(WebDriver driver) {
         this.driver = driver;
+        result = new ParserWorkResult();
     }
 
-    public String getDirectionsInfo() {
-        
+    @Override
+    public ParserWorkResult parseAllUniversityInfo() {
         return null;
-    }   
+    }
 
-    public String DownloadPdf() {
+    @Override
+    public ParserWorkResult parseCurrentScoresForAllGradesInfo() {
+        return null;
+    }
 
-        String output = null;
-        try {
-            URL website = new URL(driver.getCurrentUrl());
-            InputStream is = website.openStream();
-            BufferedInputStream fileToParse = new BufferedInputStream(is);
-            PDDocument document = null;
-            try {
-                document = PDDocument.load(fileToParse);
-                //document.save(System.getProperty("user.dir") + "/resources/pdf/baumanDirections.pdf");
-                PDFTextStripper striper = new PDFTextStripper();
-                output = striper.getText(document);
-                System.out.println(output);
-            } finally {
-                if (document != null) {
-                    document.close();
-                }
-                fileToParse.close();
-                is.close();
-            }
-        } catch (Exception e) { 
-            e.printStackTrace();
-            System.out.println("\n" + e.getMessage()); 
-        }
-        
-        return output;
+    @Override
+    public ParserWorkResult parseCurrentScoresForTargetGradeInfo(StudyGrade grade) {
+        return null;
+    }
+
+    @Override
+    public ParserWorkResult parseAdditionaDataAndPdfs(StudyGrade grade) {
+        return null;
     }
 }

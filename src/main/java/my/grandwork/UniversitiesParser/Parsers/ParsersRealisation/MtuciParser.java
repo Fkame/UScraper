@@ -1,17 +1,14 @@
 package my.grandwork.UniversitiesParser.Parsers.ParsersRealisation;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.WebDriver;
 
-import my.grandwork.UniversitiesParser.Data.SubWrappers.StudyDirectionInfo;
+import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserSupport.MtuciParserCore;
+import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
 
 
-public class MtuciParser {
-    
+public class MtuciParser implements IUniversityParser {
+    /*
     WebDriver driver;
 
     public MtuciParser(WebDriver driver) {
@@ -66,5 +63,33 @@ public class MtuciParser {
                             info.studyGrades.name();
             System.out.println(output);
         }
+    }
+    */
+    private WebDriver driver;
+    private ParserWorkResult result;
+
+    public MtuciParser(WebDriver driver) {
+        this.driver = driver;
+        result = new ParserWorkResult();
+    }
+
+    @Override
+    public ParserWorkResult parseAllUniversityInfo() {
+        return null;
+    }
+
+    @Override
+    public ParserWorkResult parseCurrentScoresForAllGradesInfo() {
+        return null;
+    }
+
+    @Override
+    public ParserWorkResult parseCurrentScoresForTargetGradeInfo(StudyGrade grade) {
+        return null;
+    }
+
+    @Override
+    public ParserWorkResult parseAdditionaDataAndPdfs(StudyGrade grade) {
+        return null;
     }
 }
