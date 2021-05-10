@@ -1,10 +1,14 @@
 package my.grandwork.UniversitiesParser.Parsers.ParsersRealisation;
 
+import java.security.InvalidParameterException;
+
 import org.openqa.selenium.WebDriver;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
+import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserSupport.MtuciParserCore;
 
 
 public class MtuciParser implements IUniversityParser {
@@ -75,21 +79,36 @@ public class MtuciParser implements IUniversityParser {
 
     @Override
     public ParserWorkResult parseAllUniversityInfo() {
-        return null;
+
+        
+
+        return result;
     }
 
     @Override
     public ParserWorkResult parseCurrentScoresForAllGradesInfo() {
-        return null;
+        this.parseCurrentScoresForTargetGradeInfo(StudyGrade.BACHELOR);
+        this.parseCurrentScoresForTargetGradeInfo(StudyGrade.MASTER);
+        this.parseCurrentScoresForTargetGradeInfo(StudyGrade.POST_GRADUATE);
+        return result;
     }
 
     @Override
     public ParserWorkResult parseCurrentScoresForTargetGradeInfo(StudyGrade grade) {
-        return null;
-    }
-
-    @Override
-    public ParserWorkResult parseAdditionaDataAndPdfs(StudyGrade grade) {
-        return null;
+        switch (grade) 
+        {
+            case BACHELOR:
+                MtuciParserCore.parseBachelorScores(driver, result);
+                break;
+            case MASTER:
+                MtuciParserCore.parseBachelorScores(driver, result);
+                break;
+            case POST_GRADUATE:
+                MtuciParserCore.parseBachelorScores(driver, result);
+                break;
+            default: 
+                throw new InvalidParameterException("Unknown grade!");
+        }
+        return result;
     }
 }

@@ -27,12 +27,5 @@ public interface IUniversityParser {
      * @return Обёртка, содержащая запрашиваемую информацию и отчёт о ходе парсинга.
      */
     ParserWorkResult parseCurrentScoresForTargetGradeInfo(StudyGrade grade);
-
-    /**
-     * Сбор всех данных, кроме конкурсной таблицы
-     * @param grade Уровень образования.
-     * @return Обёртка, содержащая запрашиваемую информацию и отчёт о ходе парсинга.
-     */
-    ParserWorkResult parseAdditionaDataAndPdfs(StudyGrade grade);
    
 }

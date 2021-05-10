@@ -1,19 +1,12 @@
 package my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserSupport;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-import my.grandwork.UniversitiesParser.Data.SubWrappers.StudyDirectionInfo;
-import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
-import my.grandwork.UniversitiesParser.Data.enums.StudyType;
+import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 
 public class MtuciParserCore {
 
+    /*
     public static ArrayList<StudyDirectionInfo> fillDirectionsInfo(WebDriver driver, StudyGrade grade) {
         ArrayList<StudyDirectionInfo> list = new ArrayList<StudyDirectionInfo>();
 
@@ -86,6 +79,19 @@ public class MtuciParserCore {
 
     public static void getLastYearScores() {
 
+    }
+    */
+    
+    public static void parseBachelorScores(WebDriver driver, ParserWorkResult result) {
+        driver.get("https://abitur.mtuci.ru/#!livetable"); 
+    }
+
+    public static void parseMasterScores(WebDriver driver, ParserWorkResult result) {
+        driver.get("https://abitur.mtuci.ru/#!magistratura_livetable");
+    }
+
+    public static void parsePostGraduatedScores(WebDriver driver, ParserWorkResult result) {
+        driver.get("https://abitur.mtuci.ru/#!aspirantura_livetable");
     }
 }
 

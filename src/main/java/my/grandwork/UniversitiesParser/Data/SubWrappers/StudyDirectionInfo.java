@@ -12,7 +12,8 @@ public class StudyDirectionInfo {
     public String nameOfDirectory;
 
     // Текущий проходной балл (на время конкурса)
-    public Integer nowDirectoryScore;
+    public Integer firstWaveScore;
+    public Integer secondWaveScore;
 
     // Форма обучения (очный и т.д.)
     public StudyType typesOfStudy;
@@ -30,8 +31,5 @@ public class StudyDirectionInfo {
     public Integer admissionPlanForTarget;
 
     // План приёма на платное
-    public Integer admussionPlanForPrice;
-
-    
-
+    public Integer admussionPlanForPrice; 
 }

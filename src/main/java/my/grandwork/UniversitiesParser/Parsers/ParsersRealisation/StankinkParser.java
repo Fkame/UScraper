@@ -30,9 +30,4 @@ public class StankinkParser implements IUniversityParser {
     public ParserWorkResult parseCurrentScoresForTargetGradeInfo(StudyGrade grade) {
         return null;
     }
-
-    @Override
-    public ParserWorkResult parseAdditionaDataAndPdfs(StudyGrade grade) {
-        return null;
-    }
 }
