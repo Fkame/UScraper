@@ -2,6 +2,8 @@ package my.grandwork.UniversitiesParser.Data.SubWrappers;
 
 import org.openqa.selenium.WebDriverException;
 
+import my.grandwork.UniversitiesParser.Parsers.emuns.University;
+
 public class UrlParsingStatus {
     public String url;
     public boolean isSuccess;
@@ -14,4 +16,6 @@ public class UrlParsingStatus {
         this.isSuccess = isSuccess;
         this.specifyDetails = specifyDetails;
     }
+
+    public UrlParsingStatus() { }
 }

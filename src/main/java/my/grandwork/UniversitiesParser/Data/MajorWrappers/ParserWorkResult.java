@@ -7,9 +7,9 @@ import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 
 public class ParserWorkResult {
     public UniversityInfoWrapper universityInfoWrapper;
-    public List<UrlParsingStatus> urlParsingStatus;
+    public List<UrlParsingStatus> urlParsingStatusList;
 
     public ParserWorkResult() {
-        urlParsingStatus = new ArrayList<UrlParsingStatus>();
+        urlParsingStatusList = new ArrayList<UrlParsingStatus>();
     }
 }

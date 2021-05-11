@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
@@ -37,7 +38,7 @@ public class ParserController {
         return true;
     }
 
-    private IUniversityParser createTargetUniversityParser(WebDriver driver, University university) {
+    public IUniversityParser createTargetUniversityParser(WebDriver driver, University university) {
         IUniversityParser parser = null;
         switch (university)
         {
@@ -70,9 +71,23 @@ public class ParserController {
     }
    
     public ParserWorkResult parseTargetUniversityInfo(University university) {
-        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
-        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
-        ParserWorkResult result = parser.parseAllUniversityInfo();
+        WebDriver driver = null;
+        ParserWorkResult result = null;
+        try {
+            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+            result = parser.parseAllUniversityInfo();
+        }
+        catch (WebDriverException ex) {
+
+        }
+        catch (Exception e) {
+
+        }
+        finally {
+            if (driver != null) driver.quit();
+        }
+        
         return result;
     }
 
@@ -89,9 +104,23 @@ public class ParserController {
 
    
     public ParserWorkResult parseCurrentScoresForAllGradesInTargetUniversity(University university) {
-        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
-        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
-        ParserWorkResult result = parser.parseCurrentScoresForAllGradesInfo();
+        WebDriver driver = null;
+        ParserWorkResult result = null;
+        try {
+            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+            result = parser.parseCurrentScoresForAllGradesInfo();
+        }
+        catch (WebDriverException ex) {
+
+        }
+        catch (Exception e) {
+
+        }
+        finally {
+            if (driver != null) driver.quit();
+        }
+        
         return result;
     }
 
@@ -109,9 +138,23 @@ public class ParserController {
 
   
     public ParserWorkResult parseCurrentScoresForTargetGradeInTargetUniversity(University university, StudyGrade grade) {
-        WebDriver driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 4);
-        IUniversityParser parser = this.createTargetUniversityParser(driver, university);
-        ParserWorkResult result = parser.parseCurrentScoresForTargetGradeInfo(grade);
+        WebDriver driver = null;
+        ParserWorkResult result = null;
+        try {
+            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            IUniversityParser parser = this.createTargetUniversityParser(driver, university);
+            result = parser.parseCurrentScoresForTargetGradeInfo(grade);
+        }
+        catch (WebDriverException ex) {
+
+        }
+        catch (Exception e) {
+
+        }
+        finally {
+            if (driver != null) driver.quit();
+        }
+        
         return result;
     }
 

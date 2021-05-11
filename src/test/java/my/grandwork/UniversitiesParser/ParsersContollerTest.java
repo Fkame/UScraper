@@ -1,10 +1,13 @@
 package my.grandwork.UniversitiesParser;
 
 import org.junit.Test;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
+import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
+import my.grandwork.UniversitiesParser.Util.enums.Browser;
 
 public class ParsersContollerTest {
     
@@ -28,9 +31,15 @@ public class ParsersContollerTest {
         
     }
 
-    @Test
+    @ParameterizedTest
+    //@EnumSource(University.class)
+    @EnumSource(names = { "MTUCI" })
     public void parseCurrentScoresForAllGradesInTargetUniversity(University university) {
-        
+        ParserController controller = new ParserController(Browser.CHROME, false, false);
+        for (StudyGrade grade : StudyGrade.values()) {
+            ParserWorkResult rez = controller.parseCurrentScoresForTargetGradeInTargetUniversity(university, grade);
+        }
+        ;
     }
 
     @Test

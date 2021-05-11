@@ -10,7 +10,8 @@ import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 public class IUniversityParserTest {
 
     @ParameterizedTest
-    @EnumSource(University.class)
+    //@EnumSource(University.class)
+    @EnumSource(names = { "MTUCI" })
     public void testParseAllUniversityInfo(University u) {
         
     }
@@ -25,8 +26,4 @@ public class IUniversityParserTest {
 
     }
 
-    @Test
-    public void testParseAdditionaDataAndPdfs(StudyGrade grade) {
-        
-    }
 }
