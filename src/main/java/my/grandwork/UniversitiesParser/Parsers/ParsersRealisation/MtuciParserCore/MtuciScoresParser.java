@@ -34,6 +34,7 @@ public class MtuciScoresParser {
                 break;
             case POST_GRADUATE:
                 url = "https://abitur.mtuci.ru/#!aspirantura_livetable";
+                break;
             default:
                 pStatus.isSuccess = false;
                 pStatus.exception = new InvalidParameterException("Unknown grade");
@@ -70,7 +71,7 @@ public class MtuciScoresParser {
         StudyType typeStudy = StudyType.FULL_TIME;
 
         // В этот список добавим спарсенные направления
-        List<StudyDirectionInfo> dirsList = result.universityInfoWrapper.directionsInformationList;
+        List<StudyDirectionInfo> dirsList = result.universityInfoWrapper.directionsInfoList;
 
         // Ожидание, так как страница прогружается не сразу и вылетает ошибка драйвера
         WebDriverWait wait = new WebDriverWait(driver, 5);
@@ -82,25 +83,27 @@ public class MtuciScoresParser {
 
         int splitterPointer = 0;
         for (int table = 0; table < tables.size(); table++) {
-            List<WebElement> rows = driver.findElements(By.cssSelector(rowsInTableSelector));
+            List<WebElement> rows = tables.get(table).findElements(By.cssSelector(rowsInTableSelector));
             if (rows.size() == 0) continue;
             
-            // Таблицы типов обучения разделены такими линиями на странице, поэтому тип обучения и эти линии можно соотнести
-            int tablePointY = tables.get(table).getLocation().getY();
-            int currentSplitterPointY = studyTypesSplitters.get(splitterPointer).getLocation().getY();
-            if (currentSplitterPointY < tablePointY) {
-                splitterPointer += 1;
-                try { 
-                    typeStudy = StudyType.values()[splitterPointer]; 
-                } catch (Exception e) { 
-                    splitterPointer -= 1;
-                    typeStudy = StudyType.values()[splitterPointer]; 
+            if (studyTypesSplitters.size() != 0) {
+                // Таблицы типов обучения разделены такими линиями на странице, поэтому тип обучения и эти линии можно соотнести
+                int tablePointY = tables.get(table).getLocation().getY();
+                int currentSplitterPointY = studyTypesSplitters.get(splitterPointer).getLocation().getY();
+                if (currentSplitterPointY < tablePointY) {
+                    splitterPointer += 1;
+                    try { 
+                        typeStudy = StudyType.values()[splitterPointer]; 
+                    } catch (Exception e) { 
+                        splitterPointer -= 1;
+                        typeStudy = StudyType.values()[splitterPointer]; 
+                    }
                 }
             }
             
             // Выбор нужных ячеек, считывание и запоминание данных
             for (int row = 0; row < rows.size(); row++) {
-                List<WebElement>cells = driver.findElements(By.cssSelector(cellsDataSelector));
+                List<WebElement>cells = rows.get(row).findElements(By.cssSelector(cellsDataSelector));
                 if (cells.size() == 0) continue;
 
                 String code = cells.get(1).getText();
@@ -113,14 +116,14 @@ public class MtuciScoresParser {
                 Integer firstWaveScore = null;
                 Integer secondWaveScore = null;
                 try { 
-                    firstWaveScore = Integer.valueOf(waves[0]); 
-                    secondWaveScore = Integer.valueOf(waves[1]);
-                } finally { }
+                    firstWaveScore = waves.length > 0 ? Integer.valueOf(waves[0]) : null; 
+                    secondWaveScore = waves.length > 1 ? Integer.valueOf(waves[1]) : null;
+                } finally { }     
                 
                 StudyDirectionInfo info = new StudyDirectionInfo();
                 info.directoryCode = code;
                 info.admissionPlanForFree = plan;
-                info.firstWaveScore = firstWaveScore;
+                info.firstWaveScoreOrGeneralScore = firstWaveScore;
                 info.secondWaveScore = secondWaveScore;
                 info.typesOfStudy = typeStudy;
                 info.studyGrades = grade;
@@ -140,8 +143,8 @@ public class MtuciScoresParser {
         result.urlParsingStatusList.addAll(result2.urlParsingStatusList);
 
         // Дополняем данные баллами за волны и планом приёма
-        List<StudyDirectionInfo> mainList = result.universityInfoWrapper.directionsInformationList;
-        List<StudyDirectionInfo> listToMerge = result.universityInfoWrapper.directionsInformationList;
+        List<StudyDirectionInfo> mainList = result.universityInfoWrapper.directionsInfoList;
+        List<StudyDirectionInfo> listToMerge = result.universityInfoWrapper.directionsInfoList;
 
         for (int i = 0; i < listToMerge.size(); i++) {
             StudyDirectionInfo dataToAdd = listToMerge.get(i);
@@ -152,7 +155,7 @@ public class MtuciScoresParser {
                     dataToAdd.typesOfStudy == dataToBeCompleted.typesOfStudy) 
                 {
                     dataToBeCompleted.admissionPlanForFree = dataToAdd.admissionPlanForFree;
-                    dataToBeCompleted.firstWaveScore = dataToAdd.firstWaveScore;
+                    dataToBeCompleted.firstWaveScoreOrGeneralScore = dataToAdd.firstWaveScoreOrGeneralScore;
                     dataToBeCompleted.secondWaveScore = dataToAdd.secondWaveScore;
                 }
             }

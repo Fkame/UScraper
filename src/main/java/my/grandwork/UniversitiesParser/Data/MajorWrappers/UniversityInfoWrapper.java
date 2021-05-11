@@ -25,12 +25,21 @@ public class UniversityInfoWrapper {
     // Информация об индивидуальных достижениях
     public List<IndividualAchievementInfo> individualAchievementsList;
 
+    // Информация о ЕГЭ для направлений бакалавра
+    public List<String> subjectsForBachelor;
+
+    // Сроки приёмной кампании
+    public String bachelorTimeAdmission;
+    public String masterTimeAdmission;
+    public String postgradeTimeAdmission;
+
     // Документы с сайта
     public List<DocInfo> docsList;
 
     public UniversityInfoWrapper() {
         directionsInfoList = new ArrayList<StudyDirectionInfo>();
-        docsList = new ArrayList<DocInfo>();
         individualAchievementsList = new ArrayList<IndividualAchievementInfo>();
+        subjectsForBachelor = new ArrayList<String>();
+        docsList = new ArrayList<DocInfo>();
     }
 }

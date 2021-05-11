@@ -1,10 +1,13 @@
 package my.grandwork.UniversitiesParser;
 
+import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
+import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 import my.grandwork.UniversitiesParser.Util.enums.Browser;
@@ -12,38 +15,50 @@ import my.grandwork.UniversitiesParser.Util.enums.Browser;
 public class ParsersContollerTest {
     
     @Test
-    public void parseAllUniversitiesInfo() {
+    public void testParseAllUniversitiesInfo() {
        
     }
 
     @Test
-    public void parseTargetUniversityInfo(University university) {
+    public void testParseTargetUniversityInfo() {
        
     }
 
     @Test
-    public void parseCurrentScoresForAllGradesInAllUniversities() {
+    public void testParseCurrentScoresForAllGradesInAllUniversities() {
 
     }
 
     @Test
-    public void parseCurrentScoresForTargetGradeInAllUniversities(StudyGrade grade) {
+    public void testParseCurrentScoresForTargetGradeInAllUniversities() {
         
     }
 
-    @ParameterizedTest
-    //@EnumSource(University.class)
-    @EnumSource(names = { "MTUCI" })
-    public void parseCurrentScoresForAllGradesInTargetUniversity(University university) {
+    @Test
+    public void testParseCurrentScoresForAllGradesInTargetUniversity() {
+        University university = University.MTUCI;
         ParserController controller = new ParserController(Browser.CHROME, false, false);
+        List<ParserWorkResult> rezes = new ArrayList<>();
         for (StudyGrade grade : StudyGrade.values()) {
             ParserWorkResult rez = controller.parseCurrentScoresForTargetGradeInTargetUniversity(university, grade);
+            rezes.add(rez);
         }
-        ;
+        assertEquals(true, true);
     }
 
     @Test
-    public void parseCurrentScoresForTargetGradeInTargetUniversity(University university, StudyGrade grade) {
-        
+    public void testParseCurrentScoresForTargetGradeInTargetUniversity() {
+        University university = University.MTUCI;
+        StudyGrade grade = StudyGrade.BACHELOR;
+        ParserController controller = new ParserController(Browser.CHROME, false, false);  
+        ParserWorkResult rez = controller.parseCurrentScoresForTargetGradeInTargetUniversity(university, grade);
+
+        UrlParsingStatus status = rez.urlParsingStatusList.get(0);
+        System.out.println(status.isSuccess + "\n" + status.url);
+        if (status.exception != null) System.out.println(status.exception.getStackTrace().toString());
+        if (status.webDriverException != null) System.out.println(status.webDriverException.getStackTrace().toString());
+        assertEquals(rez.urlParsingStatusList.get(0).isSuccess, true);
     }
+
+    
 }

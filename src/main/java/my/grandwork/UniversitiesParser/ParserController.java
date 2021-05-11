@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
+import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
 import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.*;
@@ -79,15 +80,23 @@ public class ParserController {
             result = parser.parseAllUniversityInfo();
         }
         catch (WebDriverException ex) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "WebDriverError get the controller.");
+            status.webDriverException = ex;
+            result.urlParsingStatusList.add(status);
         }
         catch (Exception e) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "Seems like system error get the controller.");
+            status.exception = e;
+            result.urlParsingStatusList.add(status);
         }
         finally {
             if (driver != null) driver.quit();
         }
-        
+
         return result;
     }
 
@@ -112,10 +121,18 @@ public class ParserController {
             result = parser.parseCurrentScoresForAllGradesInfo();
         }
         catch (WebDriverException ex) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "WebDriverError get the controller.");
+            status.webDriverException = ex;
+            result.urlParsingStatusList.add(status);
         }
         catch (Exception e) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "Seems like system error get the controller.");
+            status.exception = e;
+            result.urlParsingStatusList.add(status);
         }
         finally {
             if (driver != null) driver.quit();
@@ -146,10 +163,18 @@ public class ParserController {
             result = parser.parseCurrentScoresForTargetGradeInfo(grade);
         }
         catch (WebDriverException ex) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "WebDriverError get the controller.");
+            status.webDriverException = ex;
+            result.urlParsingStatusList.add(status);
         }
         catch (Exception e) {
-
+            String url = null;
+            if (driver != null) url = driver.getCurrentUrl();
+            UrlParsingStatus status = new UrlParsingStatus(url, false, "Seems like system error get the controller.");
+            status.exception = e;
+            result.urlParsingStatusList.add(status);
         }
         finally {
             if (driver != null) driver.quit();

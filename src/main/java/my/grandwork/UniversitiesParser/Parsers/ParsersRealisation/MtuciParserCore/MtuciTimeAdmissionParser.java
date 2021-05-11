@@ -4,9 +4,8 @@ import org.openqa.selenium.WebDriver;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 
-public class MtuciAboutUniversityParser {
-    
-    public static void parseAboutUniversityInfo(WebDriver driver, ParserWorkResult result) {
+public class MtuciTimeAdmissionParser {
+    public static void parseTimeAdmissionForAllGrades(WebDriver driver, ParserWorkResult result) {
 
     }
 }

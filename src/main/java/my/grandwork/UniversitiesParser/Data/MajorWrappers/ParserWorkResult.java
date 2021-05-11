@@ -10,6 +10,7 @@ public class ParserWorkResult {
     public List<UrlParsingStatus> urlParsingStatusList;
 
     public ParserWorkResult() {
+        universityInfoWrapper = new UniversityInfoWrapper();
         urlParsingStatusList = new ArrayList<UrlParsingStatus>();
     }
 }
