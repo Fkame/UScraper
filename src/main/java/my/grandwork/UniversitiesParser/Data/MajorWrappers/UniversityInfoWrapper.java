@@ -3,23 +3,34 @@ package my.grandwork.UniversitiesParser.Data.MajorWrappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import my.grandwork.UniversitiesParser.Data.SubWrappers.AdditionalInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.DocInfo;
+import my.grandwork.UniversitiesParser.Data.SubWrappers.IndividualAchievementInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.StudyDirectionInfo;
+import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 
 public class UniversityInfoWrapper {
 
-    // Информация о направлениях
-    public List<StudyDirectionInfo> directionsInformationList;
+    // Полное название университета
+    public String fullNameOfUniversity;
 
-    // Информация о вузе
-    public AdditionalInfo additionalInfo;
+    // Локальное наименование университета
+    public University programNameOfUniversity;
+
+    // Короткое имя университета
+    public String shortNameOfUniversity;
+
+    // Информация о направлениях бакалавриата, магистратуры и аспирантуры
+    public List<StudyDirectionInfo> directionsInfoList;
+
+    // Информация об индивидуальных достижениях
+    public List<IndividualAchievementInfo> individualAchievementsList;
 
     // Документы с сайта
     public List<DocInfo> docsList;
 
     public UniversityInfoWrapper() {
-        directionsInformationList = new ArrayList<StudyDirectionInfo>();
+        directionsInfoList = new ArrayList<StudyDirectionInfo>();
         docsList = new ArrayList<DocInfo>();
+        individualAchievementsList = new ArrayList<IndividualAchievementInfo>();
     }
 }

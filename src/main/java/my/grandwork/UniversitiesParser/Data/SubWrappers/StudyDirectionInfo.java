@@ -12,7 +12,9 @@ public class StudyDirectionInfo {
     public String nameOfDirectory;
 
     // Текущий проходной балл (на время конкурса)
-    public Integer firstWaveScore;
+    public Integer firstWaveScoreOrGeneralScore;
+
+    // Только для бакалавров
     public Integer secondWaveScore;
 
     // Форма обучения (очный и т.д.)
@@ -32,4 +34,14 @@ public class StudyDirectionInfo {
 
     // План приёма на платное
     public Integer admussionPlanForPrice; 
+
+    public StudyDirectionInfo() { }
+
+    public StudyDirectionInfo(String directoryCode, StudyGrade studyGrades, StudyType typesOfStudy, int scores) {
+        this.directoryCode = directoryCode;
+        this.studyGrades = studyGrades;
+        this.typesOfStudy = typesOfStudy;
+        this.firstWaveScoreOrGeneralScore = scores;
+    }
+    
 }
