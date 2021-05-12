@@ -5,13 +5,8 @@ import org.openqa.selenium.WebDriver;
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciAboutPaidInformationParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciAboutUniversityParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciDirectionsListParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciIndividualAchievementsParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciLastYearScoresParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciScoresParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.MtuciTimeAdmissionParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.*;
+import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 
 
 public class MtuciParser implements IUniversityParser {
@@ -21,11 +16,14 @@ public class MtuciParser implements IUniversityParser {
     public MtuciParser(WebDriver driver) {
         this.driver = driver;
         result = new ParserWorkResult();
+
+        result.universityInfoWrapper.fullNameOfUniversity = "Московский технический университет связи и информатики";
+        result.universityInfoWrapper.shortNameOfUniversity = "МТУСИ";
+        result.universityInfoWrapper.programNameOfUniversity = University.MTUCI;
     }
 
     @Override
     public ParserWorkResult parseAllUniversityInfo() {
-        MtuciAboutUniversityParser.parseAboutUniversityInfo(driver, result);
         MtuciIndividualAchievementsParser.parseInfo(driver, result);
         MtuciTimeAdmissionParser.parseTimeAdmissionForAllGrades(driver, result);
         MtuciLastYearScoresParser.addDocsAboutLastYearsEducation(driver, result);

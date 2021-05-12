@@ -16,6 +16,9 @@ public class UniversityInfoWrapper {
     // Локальное наименование университета
     public University programNameOfUniversity;
 
+    // Сайт университета
+    public String url;
+
     // Короткое имя университета
     public String shortNameOfUniversity;
 

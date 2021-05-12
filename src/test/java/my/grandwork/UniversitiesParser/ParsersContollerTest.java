@@ -1,6 +1,8 @@
 package my.grandwork.UniversitiesParser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,14 @@ public class ParsersContollerTest {
 
     @Test
     public void testParseTargetUniversityInfo() {
-       
+       University university = University.MTUCI;
+       ParserController controller = new ParserController(Browser.CHROME, false, false);  
+       ParserWorkResult rez = controller.parseTargetUniversityInfo(university);
+       assertNotNull(rez);
+
+       for (UrlParsingStatus status : rez.urlParsingStatusList) {
+        assertEquals(status.isSuccess, true);
+       }
     }
 
     @Test
