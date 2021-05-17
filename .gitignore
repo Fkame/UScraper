@@ -15,3 +15,10 @@
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+
+# Additional from Spring Initialize
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/

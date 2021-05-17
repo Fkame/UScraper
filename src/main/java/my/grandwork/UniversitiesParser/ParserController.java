@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.UnaryOperator;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;

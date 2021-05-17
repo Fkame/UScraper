@@ -30,6 +30,10 @@ public class MtuciDirectionsListParser {
                 pStatus.isSuccess = false;
                 pStatus.webDriverException = wde;
             }
+            catch (RuntimeException ee) {
+                pStatus.isSuccess = false;
+                pStatus.exception = ee;
+            }
             catch (Exception e) {
                 pStatus.isSuccess = false;
                 pStatus.exception = e;
@@ -96,6 +100,8 @@ public class MtuciDirectionsListParser {
                 StudyDirectionInfo info = new StudyDirectionInfo();
                 info.directoryCode = code;
                 info.nameOfDirectory = name;
+                info.studyGrades = grade;
+                info.typesOfStudy = type;
                 dirsList.add(info);
             }
         }

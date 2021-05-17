@@ -56,6 +56,8 @@ public class MtuciTimeAdmissionParser {
 
         String selector = ".page > *";
         driver.get(url);
+        try { Thread.sleep(1000); } catch (InterruptedException e) { } 
+
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
 

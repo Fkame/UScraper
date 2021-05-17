@@ -27,10 +27,6 @@ public class ParsersContollerTest {
        ParserController controller = new ParserController(Browser.CHROME, false, false);  
        ParserWorkResult rez = controller.parseTargetUniversityInfo(university);
        assertNotNull(rez);
-
-       for (UrlParsingStatus status : rez.urlParsingStatusList) {
-        assertEquals(status.isSuccess, true);
-       }
     }
 
     @Test

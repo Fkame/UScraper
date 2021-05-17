@@ -24,13 +24,13 @@ public class ConfigurationFabric {
         switch (br)
         {
             case FIREFOX:
-                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "src/main/resources/drivers/geckodriver.exe");
                 FirefoxOptions fOpts = new FirefoxOptions();
                 fOpts.setHeadless(true);
                 wb = new FirefoxDriver(fOpts);
                 break;
             case CHROME:
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
                 ChromeOptions cOpts = new ChromeOptions();
                 cOpts.addArguments("--headless");
                 wb = new ChromeDriver(cOpts);
@@ -48,11 +48,11 @@ public class ConfigurationFabric {
         switch (br)
         {
             case FIREFOX:
-                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "src/main/resources/drivers/geckodriver.exe");
                 wb = new FirefoxDriver();
                 break;
             case CHROME:
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
                 wb = new ChromeDriver();
                 break;
             default:

@@ -80,6 +80,10 @@ public class MtuciIndividualAchievementsParser {
             pStatus.isSuccess = false;
             pStatus.webDriverException = wde;
         }
+        catch (RuntimeException ee) {
+            pStatus.isSuccess = false;
+            pStatus.exception = ee;
+        }
         catch (Exception e) {
             pStatus.isSuccess = false;
             pStatus.exception = e;
@@ -140,6 +144,6 @@ public class MtuciIndividualAchievementsParser {
         rowsList.remove(0);
 
         rowsList.clear();
-        return;
+        throw new RuntimeException("This parser part is not ready!");
     }
 }
