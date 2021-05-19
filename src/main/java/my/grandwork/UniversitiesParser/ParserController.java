@@ -12,9 +12,12 @@ import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.UniversitiesParser.Parsers.IUniversityParser;
-import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.*;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.BaumanParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MISiSParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParser;
+import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.StankinkParser;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
-import my.grandwork.UniversitiesParser.Util.ConfigurationFabric;
+import my.grandwork.UniversitiesParser.Util.WebDriverCreationFabric;
 import my.grandwork.UniversitiesParser.Util.enums.Browser;
 
 public class ParserController {
@@ -74,7 +77,7 @@ public class ParserController {
         WebDriver driver = null;
         ParserWorkResult result = null;
         try {
-            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            driver = WebDriverCreationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
             IUniversityParser parser = this.createTargetUniversityParser(driver, university);
             result = parser.parseAllUniversityInfo();
         }
@@ -115,7 +118,7 @@ public class ParserController {
         WebDriver driver = null;
         ParserWorkResult result = null;
         try {
-            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            driver = WebDriverCreationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
             IUniversityParser parser = this.createTargetUniversityParser(driver, university);
             result = parser.parseCurrentScoresForAllGradesInfo();
         }
@@ -141,7 +144,6 @@ public class ParserController {
     }
 
 
-  
     public List<ParserWorkResult> parseCurrentScoresForTargetGradeInAllUniversities(StudyGrade grade) {
         List<ParserWorkResult> list = new ArrayList<ParserWorkResult>();
         List<University> univers = Arrays.asList(University.values());
@@ -157,7 +159,7 @@ public class ParserController {
         WebDriver driver = null;
         ParserWorkResult result = null;
         try {
-            driver = ConfigurationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
+            driver = WebDriverCreationFabric.getConfiguratedWebDriver(browser, headlessMode, 0);
             IUniversityParser parser = this.createTargetUniversityParser(driver, university);
             result = parser.parseCurrentScoresForTargetGradeInfo(grade);
         }

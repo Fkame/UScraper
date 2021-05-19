@@ -6,6 +6,7 @@ import java.util.List;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.DocInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.IndividualAchievementInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.StudyDirectionInfo;
+import my.grandwork.UniversitiesParser.Data.SubWrappers.SubjectForBachelor;
 import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 
 public class UniversityInfoWrapper {
@@ -29,7 +30,7 @@ public class UniversityInfoWrapper {
     public List<IndividualAchievementInfo> individualAchievementsList;
 
     // Информация о ЕГЭ для направлений бакалавра
-    public List<String> subjectsForBachelor;
+    public List<SubjectForBachelor> subjectsForBachelor;
 
     // Сроки приёмной кампании
     public String bachelorTimeAdmission;
@@ -42,7 +43,7 @@ public class UniversityInfoWrapper {
     public UniversityInfoWrapper() {
         directionsInfoList = new ArrayList<StudyDirectionInfo>();
         individualAchievementsList = new ArrayList<IndividualAchievementInfo>();
-        subjectsForBachelor = new ArrayList<String>();
+        subjectsForBachelor = new ArrayList<SubjectForBachelor>();
         docsList = new ArrayList<DocInfo>();
     }
 }

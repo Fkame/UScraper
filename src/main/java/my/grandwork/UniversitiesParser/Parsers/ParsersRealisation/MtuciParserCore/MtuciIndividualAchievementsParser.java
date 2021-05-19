@@ -23,6 +23,7 @@ import my.grandwork.UniversitiesParser.Data.SubWrappers.IndividualAchievementInf
 import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.InfoTypeClassification;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
+import my.grandwork.UniversitiesParser.parserAppInfo.ParserPathsConfig;
 
 public class MtuciIndividualAchievementsParser {
     public static void parseInfo(WebDriver driver, ParserWorkResult result) {
@@ -94,6 +95,8 @@ public class MtuciIndividualAchievementsParser {
     }
 
     private static void getBachelorsAchievents(WebDriver driver, ParserWorkResult result, String url) {
+
+        String pathToSave = ParserPathsConfig.FolderToSaveDownloadedFiles;
         try {
             URL website = new URL(url);
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());    
@@ -103,7 +106,7 @@ public class MtuciIndividualAchievementsParser {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
 
-            File file = new File(name);
+            File file = new File(pathToSave + name);
             boolean isSuccess = file.exists();
             if (!isSuccess) throw new Exception();
 

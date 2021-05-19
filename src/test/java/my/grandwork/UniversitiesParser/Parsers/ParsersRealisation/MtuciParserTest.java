@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
 import my.grandwork.UniversitiesParser.Parsers.ParsersRealisation.MtuciParserCore.*;
-import my.grandwork.UniversitiesParser.Util.ConfigurationFabric;
+import my.grandwork.UniversitiesParser.Util.WebDriverCreationFabric;
 import my.grandwork.UniversitiesParser.Util.enums.Browser;
 
 public class MtuciParserTest {
@@ -20,7 +20,7 @@ public class MtuciParserTest {
 
     @Before
     public void prepareDriverAndResultWrapper() {
-        this.driver = ConfigurationFabric.getConfiguratedWebDriver(Browser.CHROME, false, 0);
+        this.driver = WebDriverCreationFabric.getConfiguratedWebDriver(Browser.CHROME, false, 0);
         this.result = new ParserWorkResult();
     }
 

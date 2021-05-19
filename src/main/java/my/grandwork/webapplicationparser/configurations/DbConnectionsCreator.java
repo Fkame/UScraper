@@ -10,11 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import my.grandwork.webapplicationparser.dao.db_info.MySqlDatabaseInfo;
 
-@Configuration
 public class DbConnectionsCreator {
     
-    @Bean
-    @Qualifier("UserDataConnection")
     public Connection getUserDataConnection() {
         String url = MySqlDatabaseInfo.ConnectionUrlToDb1;
         String user = MySqlDatabaseInfo.Name1;
@@ -30,8 +27,6 @@ public class DbConnectionsCreator {
         return null;
     }
 
-    @Bean 
-    @Qualifier("EditorDataConnection")
     public Connection getEditorDataConnection() {
         String url = MySqlDatabaseInfo.ConnectionUrlToDb2;
         String user = MySqlDatabaseInfo.Name2;
@@ -47,8 +42,6 @@ public class DbConnectionsCreator {
         return null;
     }
 
-    @Bean 
-    @Qualifier("EditorParserLogConnection")
     public Connection getEditorParserLogConnection() {
         String url = MySqlDatabaseInfo.ConnectionUrlToDb3;
         String user = MySqlDatabaseInfo.Name3;
