@@ -3,9 +3,12 @@ package my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Types;
 import java.util.List;
 
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.UniversityInfoWrapper;
@@ -27,12 +30,13 @@ public class DataSimpleAdder {
         isSuccess = isSuccess & fillUniversityFiles(data);
         isSuccess = isSuccess & fillDirections(data);  
         isSuccess = isSuccess & fillGradesDirectories(data);
+        isSuccess = isSuccess & fillSubjects(data);
         return isSuccess;
     }
 
     private boolean fillUniversity (UniversityInfoWrapper data) {
-        String sql = "insert into university (full_name, short_name, prog_name, bachelog_time_admisstion," +  
-                        "master_time_admisstion, postgrade_time_admisstion) values ('?', '?', '?', '?', '?', '?')";
+        String sql = "insert into university (full_name, short_name, prog_name, bachelor_time_admission," +  
+                        "master_time_admission, postgrade_time_admission) values (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stat = connect.prepareStatement(sql)) {
             stat.setString(1, data.fullNameOfUniversity);
             stat.setString(2, data.shortNameOfUniversity);
@@ -50,7 +54,7 @@ public class DataSimpleAdder {
 
     private boolean fillUniversityFiles(UniversityInfoWrapper data) {
         String sql = "insert into university_file (id_university, type_of_save_info, file_name, file_data) " +
-                        "values ('?', '?', '?', '?')";
+                        "values (?, ?, ?, ?)";
 
         int id = getIdUniversityByProgName(data.programNameOfUniversity);
         if (id == -1) return false;
@@ -76,8 +80,9 @@ public class DataSimpleAdder {
     }
 
     private boolean fillDirections(UniversityInfoWrapper data) {
-        String sql = "insert into studyDirection (id_direction, direction_name) values ('?', '?')";
+        String sql = "insert ignore into study_Direction (id_direction, direction_name) values (?, ?)";
 
+        boolean isSuccess = true;;
         List<StudyDirectionInfo> dirs = data.directionsInfoList;
         for (StudyDirectionInfo dir : dirs) {
             try (PreparedStatement stat = connect.prepareStatement(sql)) {
@@ -86,10 +91,10 @@ public class DataSimpleAdder {
                 stat.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
-                return false;
+                isSuccess = false;
             }
         }
-        return true;
+        return isSuccess;
     }
 
     private boolean fillGradesDirectories(UniversityInfoWrapper data) {
@@ -113,21 +118,26 @@ public class DataSimpleAdder {
     }
 
     private boolean addToBachelor(StudyDirectionInfo dir, University university) {
-        String sql = "insert into bachelor_direction (id_university, id_direction, studytime_type, " + 
-                        "firstwave_score, secondwave_score, admissionplan_for_free, admissionplan_for_target) " +
-                        "admissionplan_for_price, cost_of_education " +
-                        "values ('?', '?', '?', '?', '?', '?', '?', '?', '?')";
-
+        String sql = "insert ignore into bachelor_direction (id_university, id_direction, studytime_type, " + 
+                        "firstwave_score, secondwave_score, admissionplan_for_free, admissionplan_for_target, " +
+                        "admissionplan_for_price, cost_of_education) " +
+                        "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stat = connect.prepareStatement(sql)) {
             stat.setInt(1, this.getIdUniversityByProgName(university));
             stat.setString(2, dir.directoryCode);
             stat.setString(3, dir.typesOfStudy.toString());
-            stat.setInt(4, dir.firstWaveScoreOrGeneralScore);
-            stat.setInt(5, dir.secondWaveScore);
-            stat.setInt(6, dir.admissionPlanForFree);
-            stat.setInt(7, dir.admissionPlanForTarget);
-            stat.setInt(8, dir.admussionPlanForPrice);
-            stat.setInt(9, dir.costOfEducation);
+            if (dir.firstWaveScoreOrGeneralScore == null) stat.setNull(4, Types.INTEGER);
+            else stat.setInt(4, dir.firstWaveScoreOrGeneralScore.intValue());
+            if (dir.secondWaveScore == null) stat.setNull(5, Types.INTEGER);
+            else stat.setInt(5, dir.secondWaveScore.intValue());
+            if (dir.admissionPlanForFree == null) stat.setNull(6, Types.INTEGER); 
+            else stat.setInt(6, dir.admissionPlanForFree.intValue());
+            if (dir.admissionPlanForTarget == null) stat.setNull(7, Types.INTEGER); 
+            else stat.setInt(7, dir.admissionPlanForTarget.intValue());
+            if (dir.admussionPlanForPrice == null) stat.setNull(8, Types.INTEGER); 
+            else stat.setInt(8, dir.admussionPlanForPrice.intValue());
+            if (dir.costOfEducation == null) stat.setNull(9, Types.INTEGER); 
+            else stat.setInt(9, dir.costOfEducation.intValue());
             stat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,19 +147,24 @@ public class DataSimpleAdder {
     }
 
     private boolean addToMaster(StudyDirectionInfo dir, University university) {
-        String sql = "insert into master_direction (id_university, id_direction, studytime_type, " + 
-                        "now_score, admissionplan_for_free, admissionplan_for_target) " +
-                        "admissionplan_for_price, cost_of_education " +
-                        "values ('?', '?', '?', '?', '?', '?', '?', '?')";
+        String sql = "insert ignore into master_direction (id_university, id_direction, studytime_type, " + 
+                        "now_score, admissionplan_for_free, admissionplan_for_target, " +
+                        "admissionplan_for_price, cost_of_education) " +
+                        "values (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stat = connect.prepareStatement(sql)) {
             stat.setInt(1, this.getIdUniversityByProgName(university));
             stat.setString(2, dir.directoryCode);
             stat.setString(3, dir.typesOfStudy.toString());
-            stat.setInt(4, dir.firstWaveScoreOrGeneralScore);
-            stat.setInt(5, dir.admissionPlanForFree);
-            stat.setInt(6, dir.admissionPlanForTarget);
-            stat.setInt(7, dir.admussionPlanForPrice);
-            stat.setInt(8, dir.costOfEducation);
+            if (dir.firstWaveScoreOrGeneralScore == null) stat.setNull(4, Types.INTEGER);
+            else stat.setInt(4, dir.firstWaveScoreOrGeneralScore);
+            if (dir.admissionPlanForFree == null) stat.setNull(5, Types.INTEGER); 
+            else stat.setInt(5, dir.admissionPlanForFree);
+            if (dir.admissionPlanForTarget == null) stat.setNull(6, Types.INTEGER); 
+            else stat.setInt(6, dir.admissionPlanForTarget);
+            if (dir.admussionPlanForPrice == null) stat.setNull(7, Types.INTEGER); 
+            else stat.setInt(7, dir.admussionPlanForPrice);
+            if (dir.costOfEducation == null) stat.setNull(8, Types.INTEGER); 
+            else stat.setInt(8, dir.costOfEducation);
             stat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,19 +174,24 @@ public class DataSimpleAdder {
     }
 
     private boolean addToPostGrade(StudyDirectionInfo dir, University university) {
-        String sql = "insert into postgrade (id_university, id_direction, studytime_type, " + 
-                        "now_score, admissionplan_for_free, admissionplan_for_target) " +
-                        "admissionplan_for_price, cost_of_education " +
-                        "values ('?', '?', '?', '?', '?', '?', '?', '?')";
+        String sql = "insert ignore into postgrade_direction (id_university, id_direction, studytime_type, " + 
+                        "now_score, admissionplan_for_free, admissionplan_for_target, " +
+                        "admissionplan_for_price, cost_of_education) " +
+                        "values (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stat = connect.prepareStatement(sql)) {
             stat.setInt(1, this.getIdUniversityByProgName(university));
             stat.setString(2, dir.directoryCode);
             stat.setString(3, dir.typesOfStudy.toString());
-            stat.setInt(4, dir.firstWaveScoreOrGeneralScore);
-            stat.setInt(5, dir.admissionPlanForFree);
-            stat.setInt(6, dir.admissionPlanForTarget);
-            stat.setInt(7, dir.admussionPlanForPrice);
-            stat.setInt(8, dir.costOfEducation);
+            if (dir.firstWaveScoreOrGeneralScore == null) stat.setNull(4, Types.INTEGER);
+            else stat.setInt(4, dir.firstWaveScoreOrGeneralScore);
+            if (dir.admissionPlanForFree == null) stat.setNull(5, Types.INTEGER); 
+            else stat.setInt(5, dir.admissionPlanForFree);
+            if (dir.admissionPlanForTarget == null) stat.setNull(6, Types.INTEGER); 
+            else stat.setInt(6, dir.admissionPlanForTarget);
+            if (dir.admussionPlanForPrice == null) stat.setNull(7, Types.INTEGER); 
+            else stat.setInt(7, dir.admussionPlanForPrice);
+            if (dir.costOfEducation == null) stat.setNull(8, Types.INTEGER); 
+            else stat.setInt(8, dir.costOfEducation);
             stat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,7 +202,7 @@ public class DataSimpleAdder {
 
     private boolean fillSubjects(UniversityInfoWrapper data) {
         String sql = "insert into subject_for_bachelor_direction(subject_name, id_university, id_direction, studytime_type, " +
-                        "min_required_score) values('?', '?', '?', '?', '?')";
+                        "min_required_score) values(?, ?, ?, ?, ?)";
         List<SubjectForBachelor>subjects = data.subjectsForBachelor;
         for (SubjectForBachelor s : subjects) {
             try (PreparedStatement stat = connect.prepareStatement(sql)) {
@@ -190,7 +210,8 @@ public class DataSimpleAdder {
                 stat.setInt(2, getIdUniversityByProgName(data.programNameOfUniversity));
                 stat.setString(3, s.direction.directoryCode);
                 stat.setString(4, s.direction.typesOfStudy.toString());
-                stat.setInt(5, s.minRequiredScore);
+                if (s.minRequiredScore == null) stat.setNull(5, Types.INTEGER);
+                else stat.setInt(5, s.minRequiredScore);
                 stat.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -201,28 +222,11 @@ public class DataSimpleAdder {
     }
     
     private int getIdUniversityByProgName(University university) {
-        String sql = "select id_university from university where prog_name='?'";
+        String sql = "select id_university from university where prog_name=?";
         int id = -1;
 
         try (PreparedStatement stat = connect.prepareStatement(sql)) {
             stat.setString(1, university.toString());
-            ResultSet resSet = stat.executeQuery();
-            resSet.next();
-            id = resSet.getInt(1);
-            resSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return id;
-    }
-
-    private int getIdSubjectByName(String subject) {
-        String sql = "select id_subject from school_exams_subject where subject_name='?'";
-        int id = -1;
-
-        try (PreparedStatement stat = connect.prepareStatement(sql)) {
-            stat.setString(1, subject);
             ResultSet resSet = stat.executeQuery();
             resSet.next();
             id = resSet.getInt(1);

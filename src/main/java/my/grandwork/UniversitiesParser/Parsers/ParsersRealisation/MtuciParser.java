@@ -27,8 +27,8 @@ public class MtuciParser implements IUniversityParser {
         MtuciIndividualAchievementsParser.parseInfo(driver, result);
         MtuciTimeAdmissionParser.parseTimeAdmissionForAllGrades(driver, result);
         MtuciLastYearScoresParser.addDocsAboutLastYearsEducation(driver, result);
-        MtuciDirectionsListParser.parseAllDirections(driver, result);
-        MtuciScoresParser.addScoresToExistingWorkResults(driver, result);
+        //MtuciDirectionsListParser.parseAllDirections(driver, result);
+        MtuciScoresParser.getCurrentScoresWithReplace(driver, result);
         MtuciAboutPaidInformationParser.addAllInfoAboutPaidEducation(driver, result);
         
         return result;

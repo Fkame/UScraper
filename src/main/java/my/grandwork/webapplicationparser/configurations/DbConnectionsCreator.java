@@ -12,6 +12,10 @@ import my.grandwork.webapplicationparser.dao.db_info.MySqlDatabaseInfo;
 
 public class DbConnectionsCreator {
     
+    public DbConnectionsCreator() {
+        
+    }
+
     public Connection getUserDataConnection() {
         String url = MySqlDatabaseInfo.ConnectionUrlToDb1;
         String user = MySqlDatabaseInfo.Name1;

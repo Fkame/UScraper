@@ -102,11 +102,11 @@ public class MtuciIndividualAchievementsParser {
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());    
 
             String name = url.substring(url.lastIndexOf("#") + 1);
-            FileOutputStream fos = new FileOutputStream(name);
+            FileOutputStream fos = new FileOutputStream(pathToSave + name);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
 
-            File file = new File(pathToSave + name);
+            File file = new File(System.getProperty("user.dir") + "\\" + pathToSave + name);
             boolean isSuccess = file.exists();
             if (!isSuccess) throw new Exception();
 
@@ -138,6 +138,7 @@ public class MtuciIndividualAchievementsParser {
     }
 
     private static void getPostGraduatedsAchievents(WebDriver driver, ParserWorkResult result) {
+        /*
         String waitSelector = ".data ul li";
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(waitSelector)));
@@ -147,6 +148,7 @@ public class MtuciIndividualAchievementsParser {
         rowsList.remove(0);
 
         rowsList.clear();
+        */
         throw new RuntimeException("This parser part is not ready!");
     }
 }

@@ -14,7 +14,7 @@ public class ReportAppender {
 
     private String insertTemplate = "insert into url_parsing_report" + 
                                 "(prog_university_name, url, is_success, commentary, exception_text, webdriver_exception_text)" + 
-                                "values('?','?','?','?','?','?')";
+                                "values(?,?,?,?,?,?)";
                                 
     private Connection connect;
     public ReportAppender(Connection connect) {

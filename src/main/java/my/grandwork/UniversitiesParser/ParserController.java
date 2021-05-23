@@ -48,14 +48,6 @@ public class ParserController {
             case MTUCI: 
                 parser = new MtuciParser(driver);
                 break;
-            case BMSTU:
-                parser = new BaumanParser(driver);
-                break;
-            case STANKINK:
-                parser = new StankinkParser(driver);
-                break;
-            case MISiS:
-                parser = new MISiSParser(driver);
             ///TODO: после реализации парсера сюда нужно добавить его вызов
             default: 
                 throw new InvalidParameterException("This univesity does not supported yet");
@@ -86,14 +78,16 @@ public class ParserController {
             if (driver != null) url = driver.getCurrentUrl();
             UrlParsingStatus status = new UrlParsingStatus(url, false, "WebDriverError get the controller.");
             status.webDriverException = ex;
-            result.urlParsingStatusList.add(status);
+            if (result != null)
+                result.urlParsingStatusList.add(status);
         }
         catch (Exception e) {
             String url = null;
             if (driver != null) url = driver.getCurrentUrl();
             UrlParsingStatus status = new UrlParsingStatus(url, false, "Seems like system error get the controller.");
             status.exception = e;
-            result.urlParsingStatusList.add(status);
+            if (result != null)
+                result.urlParsingStatusList.add(status);
         }
         finally {
             if (driver != null) driver.quit();
@@ -127,14 +121,16 @@ public class ParserController {
             if (driver != null) url = driver.getCurrentUrl();
             UrlParsingStatus status = new UrlParsingStatus(url, false, "WebDriverError get the controller.");
             status.webDriverException = ex;
-            result.urlParsingStatusList.add(status);
+            if (result != null)
+                result.urlParsingStatusList.add(status);
         }
         catch (Exception e) {
             String url = null;
             if (driver != null) url = driver.getCurrentUrl();
             UrlParsingStatus status = new UrlParsingStatus(url, false, "Seems like system error get the controller.");
             status.exception = e;
-            result.urlParsingStatusList.add(status);
+            if (result != null)
+                result.urlParsingStatusList.add(status);
         }
         finally {
             if (driver != null) driver.quit();

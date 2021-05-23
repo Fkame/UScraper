@@ -75,6 +75,7 @@ public class MtuciScoresParser {
 
         // Ожидание, так как страница прогружается не сразу и вылетает ошибка драйвера
         WebDriverWait wait = new WebDriverWait(driver, 5);
+        try { Thread.sleep(2000); } catch (InterruptedException e) { }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(waitElementTargetSelector)));
         
         // Типу обучения могут соответствовать несколько таблиц, нужно их различать
@@ -144,7 +145,7 @@ public class MtuciScoresParser {
 
         // Дополняем данные баллами за волны и планом приёма
         List<StudyDirectionInfo> mainList = result.universityInfoWrapper.directionsInfoList;
-        List<StudyDirectionInfo> listToMerge = result.universityInfoWrapper.directionsInfoList;
+        List<StudyDirectionInfo> listToMerge = result2.universityInfoWrapper.directionsInfoList;
 
         for (int i = 0; i < listToMerge.size(); i++) {
             StudyDirectionInfo dataToAdd = listToMerge.get(i);
@@ -160,6 +161,16 @@ public class MtuciScoresParser {
                 }
             }
         }
+    }
+
+    public static void getCurrentScoresWithReplace(WebDriver driver, ParserWorkResult result) {
+        MtuciScoresParser.parseScoresForTargerStudyGrade(driver, result, StudyGrade.BACHELOR);
+        MtuciScoresParser.parseScoresForTargerStudyGrade(driver, result, StudyGrade.MASTER);
+        MtuciScoresParser.parseScoresForTargerStudyGrade(driver, result, StudyGrade.POST_GRADUATE);
+    }
+
+    public static void concatSameDirections(ParserWorkResult result) {
+        List<StudyDirectionInfo> mainList = result.universityInfoWrapper.directionsInfoList;
     }
 }
 
