@@ -14,7 +14,9 @@
         <h3>Below you can see a list of universities list information about which is collected:</h3>
         <ul>
             <th:block th:each="name : ${names}">
-                <li class="list-group-item" th:text="${name.fullName} + ' (' + ${name.shortName} + ')'"></li>
+                <a th:href="'/university/' + ${name.id}">
+                    <li class="list-group-item" th:text="${name.fullName} + ' (' + ${name.shortName} + ')'"></li>
+                </a>
             </th:block>
         </ul>
     </div>
