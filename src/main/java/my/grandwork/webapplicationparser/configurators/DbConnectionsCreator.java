@@ -1,4 +1,4 @@
-package my.grandwork.webapplicationparser.configurations;
+package my.grandwork.webapplicationparser.configurators;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

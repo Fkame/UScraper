@@ -10,11 +10,13 @@ import my.grandwork.UniversitiesParser.Data.MajorWrappers.UniversityInfoWrapper;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.DocInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.InfoTypeClassification;
-import my.grandwork.webapplicationparser.configurations.DbConnectionsCreator;
+import my.grandwork.webapplicationparser.configurators.DbConnectionsCreator;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.CurrentScoresUpdater;
+import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.DataGetter;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.DataSimpleAdder;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.ReportAppender;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.TablesCleaner;
+import my.grandwork.webapplicationparser.dao.dataWrappers.UniversityName;
 
 public class DatabaseInformationWorker {
     
@@ -110,5 +112,16 @@ public class DatabaseInformationWorker {
 
     }
 
+    public List<UniversityName> getUniversitiesNamesList() {
+        Connection connectData = connectGetter.getUserDataConnection();
+        DataGetter dg = new DataGetter(connectData);
+        return dg.getUniversitiesNamesList();
+    }
+
+    public UniversityName getUniversityById(int id) {
+        Connection connectData = connectGetter.getUserDataConnection();
+        DataGetter dg = new DataGetter(connectData);
+        return dg.getUniversityById(id);
+    }
 
 }

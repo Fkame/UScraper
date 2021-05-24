@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Universities list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        h1 { margin-bottom: 15px;}
+    </style>
+</head>
+<body>
+    <header th:insert="parts/navbar :: header"></header>
+    <div class="container">
+        <h3>Below you can see a list of universities list information about which is collected:</h3>
+        <ul>
+            <th:block th:each="name : ${names}">
+                <li class="list-group-item" th:text="${name.fullName} + ' (' + ${name.shortName} + ')'"></li>
+            </th:block>
+        </ul>
+    </div>
+</body>
+</html>

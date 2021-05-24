@@ -3,7 +3,10 @@ package my.grandwork.webapplicationparser.controllers;
 import org.junit.Before;
 import org.junit.Test;
 
+import my.grandwork.webapplicationparser.controllers.notMVC.ParserTimeCaller;
+
 public class TestParserTimeCaller {
+    
     public ParserTimeCaller parseCaller;
 
     @Before

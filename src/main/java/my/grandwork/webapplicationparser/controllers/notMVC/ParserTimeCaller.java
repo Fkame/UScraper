@@ -1,20 +1,27 @@
-package my.grandwork.webapplicationparser.controllers;
+package my.grandwork.webapplicationparser.controllers.notMVC;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Arrays;
 
 import my.grandwork.UniversitiesParser.ParserController;
 import my.grandwork.UniversitiesParser.Data.MajorWrappers.ParserWorkResult;
-import my.grandwork.UniversitiesParser.Parsers.emuns.University;
 import my.grandwork.UniversitiesParser.Util.enums.Browser;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorker;
 
 public class ParserTimeCaller {
 
+    // Время срабатывания - каждый час
+    public static int delayTimeInSec = 3600;
+
+    @Autowired
     DatabaseInformationWorker dbWorker;
+
     public ParserTimeCaller() {
-        dbWorker = new DatabaseInformationWorker();
+        //dbWorker = new DatabaseInformationWorker();
     }
 
     public void runParsingAllContent() {
