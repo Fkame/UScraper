@@ -17,6 +17,7 @@ import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.DataG
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.DataSimpleAdder;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.ReportAppender;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.TablesCleaner;
+import my.grandwork.webapplicationparser.dao.dataWrappers.CompetitionDirection;
 import my.grandwork.webapplicationparser.dao.dataWrappers.UniversityName;
 
 public class DatabaseInformationWorker {
@@ -125,6 +126,12 @@ public class DatabaseInformationWorker {
         Connection connectData = connectGetter.getUserDataConnection();
         DataGetter dg = new DataGetter(connectData);
         return dg.getTimeOfAdmissionByGradeAndId(idUniversity, grade);
+    }
+
+    public List<CompetitionDirection> getCompetitionTableOfUniversityByIdAndGrade(int idUniversity, StudyGrade grade) {
+        Connection connectData = connectGetter.getUserDataConnection();
+        DataGetter dg = new DataGetter(connectData);
+        return dg.getCompetitionTableOfUniversityByIdAndGrade(idUniversity, grade);
     }
 
 }

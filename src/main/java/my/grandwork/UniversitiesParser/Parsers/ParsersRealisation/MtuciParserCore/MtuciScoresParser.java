@@ -106,6 +106,9 @@ public class MtuciScoresParser {
             for (int row = 0; row < rows.size(); row++) {
                 List<WebElement>cells = rows.get(row).findElements(By.cssSelector(cellsDataSelector));
                 if (cells.size() == 0) continue;
+                
+                String name = cells.get(0).getText();
+                name = name.replaceAll("\\s*\\(.+\\)", "");
 
                 String code = cells.get(1).getText();
                 String planStr = cells.get(2).getText();
@@ -123,6 +126,7 @@ public class MtuciScoresParser {
                 
                 StudyDirectionInfo info = new StudyDirectionInfo();
                 info.directoryCode = code;
+                info.nameOfDirectory = name;
                 info.admissionPlanForFree = plan;
                 info.firstWaveScoreOrGeneralScore = firstWaveScore;
                 info.secondWaveScore = secondWaveScore;
@@ -171,6 +175,25 @@ public class MtuciScoresParser {
 
     public static void concatSameDirections(ParserWorkResult result) {
         List<StudyDirectionInfo> mainList = result.universityInfoWrapper.directionsInfoList;
+
+        for (int i = 0; i < mainList.size(); i++) {
+            for (int j = 0; j < mainList.size(); j++) {
+                StudyDirectionInfo dir = mainList.get(i);
+                StudyDirectionInfo dir2 = mainList.get(j);
+                if (dir.directoryCode.equals(dir2.directoryCode) &&
+                    dir.studyGrades.equals(dir2.studyGrades) &&
+                    dir.typesOfStudy.equals(dir2.typesOfStudy) && 
+                    i != j)
+                    {
+                        if (dir.admissionPlanForFree != null) dir.admissionPlanForFree += dir2.admissionPlanForFree;
+                        if (dir.admissionPlanForTarget != null) dir.admissionPlanForTarget += dir2.admissionPlanForTarget;
+                        if (dir.firstWaveScoreOrGeneralScore != null) dir.firstWaveScoreOrGeneralScore += dir2.firstWaveScoreOrGeneralScore;
+                        if (dir.secondWaveScore != null) dir.secondWaveScore += dir2.secondWaveScore;
+                        mainList.remove(j);
+                        j -= 1;
+                    }
+            }
+        }
     }
 }
 

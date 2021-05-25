@@ -1,10 +1,13 @@
 package my.grandwork.webapplicationparser.service.UniversityDataCore;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 
 import my.grandwork.UniversitiesParser.Data.enums.InfoTypeClassification;
 import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorker;
+import my.grandwork.webapplicationparser.dao.dataWrappers.CompetitionDirection;
 
 public class UniversityDataModelFiller {
 
@@ -23,6 +26,9 @@ public class UniversityDataModelFiller {
                 model.addAttribute("text", String.class);
                 break;
             case COMPETITION_TABLE:
+                List<CompetitionDirection>dirs = db_worker.getCompetitionTableOfUniversityByIdAndGrade(id, studyGrade);
+                model.addAttribute("compTable", dirs);
+                model.addAttribute("dir", CompetitionDirection.class);
                 break;
         }
     }

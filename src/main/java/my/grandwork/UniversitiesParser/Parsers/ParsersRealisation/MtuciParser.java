@@ -29,6 +29,7 @@ public class MtuciParser implements IUniversityParser {
         MtuciLastYearScoresParser.addDocsAboutLastYearsEducation(driver, result);
         //MtuciDirectionsListParser.parseAllDirections(driver, result);
         MtuciScoresParser.getCurrentScoresWithReplace(driver, result);
+        MtuciScoresParser.concatSameDirections(result);
         MtuciAboutPaidInformationParser.addAllInfoAboutPaidEducation(driver, result);
         
         return result;
