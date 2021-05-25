@@ -21,7 +21,7 @@
         </div>
         <!-- Выбор информации для вывода-->
         <div class="row">
-            <form class="d-flex justify-content: space-between" th:action="${#httpServletRequest.requestURL.toString()} + @{/info}" th:method="GET">
+            <form class="d-flex justify-content: space-between" th:action="'/university/' + ${uid} + @{/info}" th:method="GET">
                 <div class="col-lg-6">
                     <select class="form-select form-select-lg" aria-label="infoType" name="infoType">
                         <option disabled selected>Choose content type</option>

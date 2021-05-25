@@ -52,6 +52,7 @@ public class UniversityDataController {
 		model.addAttribute("type", InfoTypeClassification.class);
 		model.addAttribute("grades", StudyGrade.values());
 		model.addAttribute("grade", StudyGrade.class);
+        model.addAttribute("uid", u_id);
 
         return true;
     }
