@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Time of admission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <!-- Font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap" rel="stylesheet"> 
+    <style>
+        p { font-family: 'Cormorant Garamond', serif;}
+    </style>
+</head>
+<body>
+    <div class="container" th:fragment="data">
+        <th:block th:each="text : ${texts}">
+            <p th:text="${text}"></p>                 
+        </th:block> 
+    </div>
+</body>

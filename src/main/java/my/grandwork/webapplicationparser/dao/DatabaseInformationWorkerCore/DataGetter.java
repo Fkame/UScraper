@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.webapplicationparser.dao.dataWrappers.UniversityName;
 
 public class DataGetter {
@@ -48,5 +49,34 @@ public class DataGetter {
         }
         
         return un;
+    }
+
+    public String getTimeOfAdmissionByGradeAndId(int idUniversity, StudyGrade grade) {
+        String sql = null;
+        switch (grade) {
+            case BACHELOR:
+                sql = "SELECT bachelor_time_admission FROM university where id_university=?";
+                break;
+            case MASTER:
+                sql = "SELECT master_time_admission FROM university where id_university=?";
+                break;
+            case POST_GRADUATE:
+                sql = "SELECT postgrade_time_admission FROM university where id_university=?";
+                break;
+            default: return null;
+        }
+
+        try (PreparedStatement stat = connect.prepareStatement(sql)) {
+            stat.setInt(1, idUniversity);
+            ResultSet rez = stat.executeQuery();
+
+            rez.next();
+            return rez.getString(1);
+            
+        } catch (SQLException e) { 
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

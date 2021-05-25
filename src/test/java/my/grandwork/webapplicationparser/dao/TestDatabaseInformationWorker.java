@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.webapplicationparser.dao.dataWrappers.UniversityName;
 
 public class TestDatabaseInformationWorker {
@@ -28,5 +29,18 @@ public class TestDatabaseInformationWorker {
         DatabaseInformationWorker db = new DatabaseInformationWorker();
         UniversityName name = db.getUniversityById(1);
         assertNotNull(name);
+    }
+
+    @Test
+    public void getTimeOfAdmissionByGradeAndIdTest() {
+        DatabaseInformationWorker db = new DatabaseInformationWorker();
+        String rez = db.getTimeOfAdmissionByGradeAndId(1, StudyGrade.BACHELOR);
+        assertNotNull(rez);
+
+        rez = db.getTimeOfAdmissionByGradeAndId(1, StudyGrade.MASTER);
+        assertNotNull(rez);
+
+        rez = db.getTimeOfAdmissionByGradeAndId(1, StudyGrade.POST_GRADUATE);
+        assertNotNull(rez);
     }
 }

@@ -10,6 +10,7 @@ import my.grandwork.UniversitiesParser.Data.MajorWrappers.UniversityInfoWrapper;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.DocInfo;
 import my.grandwork.UniversitiesParser.Data.SubWrappers.UrlParsingStatus;
 import my.grandwork.UniversitiesParser.Data.enums.InfoTypeClassification;
+import my.grandwork.UniversitiesParser.Data.enums.StudyGrade;
 import my.grandwork.webapplicationparser.configurators.DbConnectionsCreator;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.CurrentScoresUpdater;
 import my.grandwork.webapplicationparser.dao.DatabaseInformationWorkerCore.DataGetter;
@@ -104,10 +105,6 @@ public class DatabaseInformationWorker {
         }
     }
 
-    public ResultSet getDataByType(InfoTypeClassification infoType) {
-        return null;
-    }
-
     public void deleteParsedFiles(List<DocInfo> fileList) {
 
     }
@@ -122,6 +119,12 @@ public class DatabaseInformationWorker {
         Connection connectData = connectGetter.getUserDataConnection();
         DataGetter dg = new DataGetter(connectData);
         return dg.getUniversityById(id);
+    }
+
+    public String getTimeOfAdmissionByGradeAndId(int idUniversity, StudyGrade grade) {
+        Connection connectData = connectGetter.getUserDataConnection();
+        DataGetter dg = new DataGetter(connectData);
+        return dg.getTimeOfAdmissionByGradeAndId(idUniversity, grade);
     }
 
 }

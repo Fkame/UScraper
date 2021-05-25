@@ -48,20 +48,6 @@ public class MappingController {
 		return "ulist";
 	}
 
-	@GetMapping("/university/{u_id}") 
-	public String getUniveristyByPath(@PathVariable int u_id, Model model) {
-		UniversityName uname = db_worker.getUniversityById(u_id);
-		if (uname == null) return "404";
-
-		model.addAttribute("name", uname);
-		model.addAttribute("contentType", InfoTypeClassification.values());
-		model.addAttribute("type", InfoTypeClassification.class);
-		model.addAttribute("grades", StudyGrade.values());
-		model.addAttribute("grade", StudyGrade.class);
-
-		return "universityInfo";
-	}
-
 	@GetMapping("/search")
 	public String searchUniversity(@RequestParam String uname, Model model) {
 		SearchEngine enj = new SearchEngine(db_worker);
