@@ -17,11 +17,10 @@ public class ParserTimeCaller {
     // Время срабатывания - каждый час
     public static int delayTimeInSec = 3600;
 
-    @Autowired
     DatabaseInformationWorker dbWorker;
 
     public ParserTimeCaller() {
-        //dbWorker = new DatabaseInformationWorker();
+        dbWorker = new DatabaseInformationWorker();
     }
 
     public void runParsingAllContent() {

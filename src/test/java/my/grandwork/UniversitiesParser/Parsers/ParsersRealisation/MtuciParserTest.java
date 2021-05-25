@@ -40,6 +40,8 @@ public class MtuciParserTest {
     @Test
     public void testMtuciTimeAdmissionParser() { 
         MtuciTimeAdmissionParser.parseTimeAdmissionForAllGrades(driver, result);
+        String plan = result.universityInfoWrapper.bachelorTimeAdmission;
+        System.out.println(plan);
         assertNotNull(result);
     }
 

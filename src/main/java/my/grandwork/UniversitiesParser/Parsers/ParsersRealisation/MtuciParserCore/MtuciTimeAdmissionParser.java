@@ -67,7 +67,7 @@ public class MtuciTimeAdmissionParser {
         StringBuilder data = new StringBuilder();
         for (WebElement webElement : list) {
             List<WebElement> childs = webElement.findElements(By.cssSelector("*"));
-            for (WebElement elem : list) {
+            for (WebElement elem : childs) {
                 data.append(elem.getText()).append("\n");
             }
             data.append("\n");
